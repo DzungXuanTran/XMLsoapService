@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://services.quicklogix.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://services.quicklogix.com" xmlns:intf="http://services.quicklogix.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://services.quicklogix.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="savexmltoserver">
+    <complexType>
+     <sequence>
+      <element name="inputXML" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="savexmltoserverResponse">
+    <complexType>
+     <sequence>
+      <element name="savexmltoserverReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getfilexpath">
+    <complexType>
+     <sequence>
+      <element name="fileName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getfilexpathResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getfilexpathReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getfilemetadata">
+    <complexType>
+     <sequence>
+      <element name="fileName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getfilemetadataResponse">
+    <complexType>
+     <sequence>
+      <element name="getfilemetadataReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getfilexpathResponse">
+
+      <wsdl:part element="impl:getfilexpathResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getfilemetadataResponse">
+
+      <wsdl:part element="impl:getfilemetadataResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getfilexpathRequest">
+
+      <wsdl:part element="impl:getfilexpath" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="savexmltoserverResponse">
+
+      <wsdl:part element="impl:savexmltoserverResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getfilemetadataRequest">
+
+      <wsdl:part element="impl:getfilemetadata" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="savexmltoserverRequest">
+
+      <wsdl:part element="impl:savexmltoserver" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="XMLService">
+
+      <wsdl:operation name="savexmltoserver">
+
+         <wsdl:input message="impl:savexmltoserverRequest" name="savexmltoserverRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:savexmltoserverResponse" name="savexmltoserverResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getfilexpath">
+
+         <wsdl:input message="impl:getfilexpathRequest" name="getfilexpathRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getfilexpathResponse" name="getfilexpathResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getfilemetadata">
+
+         <wsdl:input message="impl:getfilemetadataRequest" name="getfilemetadataRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getfilemetadataResponse" name="getfilemetadataResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="XMLServiceSoapBinding" type="impl:XMLService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="savexmltoserver">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="savexmltoserverRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="savexmltoserverResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getfilexpath">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getfilexpathRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getfilexpathResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getfilemetadata">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getfilemetadataRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getfilemetadataResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="XMLServiceService">
+
+      <wsdl:port binding="impl:XMLServiceSoapBinding" name="XMLService">
+
+         <wsdlsoap:address location="http://localhost:8180/XMLsoapService/services/XMLService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
