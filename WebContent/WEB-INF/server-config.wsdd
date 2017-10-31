@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="sendXsiTypes" value="true"/>
   <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -33,16 +33,24 @@
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
  </ns1:service>
  <ns1:service name="XMLService" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="savexmltoserver" qname="ns1:savexmltoserver" returnQName="ns1:savexmltoserverReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://services.quicklogix.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+  <ns2:operation name="updatexml" qname="ns1:updatexml" returnQName="ns1:updatexmlReturn" returnType="xsd:boolean" soapAction="" xmlns:ns1="http://services.quicklogix.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:dbName" type="xsd:string"/>
+   <ns2:parameter qname="ns1:pathName" type="xsd:string"/>
    <ns2:parameter qname="ns1:inputXML" type="xsd:string"/>
   </ns2:operation>
-  <ns1:operation name="getfilexpath" qname="ns2:getfilexpath" returnQName="ns2:getfilexpathReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://services.quicklogix.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns2:fileName" type="xsd:string"/>
+  <ns1:operation name="savexmltoserver" qname="ns2:savexmltoserver" returnQName="ns2:savexmltoserverReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://services.quicklogix.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:dbName" type="xsd:string"/>
+   <ns1:parameter qname="ns2:inputXML" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getfilemetadata" qname="ns3:getfilemetadata" returnQName="ns3:getfilemetadataReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://services.quicklogix.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="getfilexpath" qname="ns3:getfilexpath" returnQName="ns3:getfilexpathReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://services.quicklogix.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:dbName" type="xsd:string"/>
    <ns1:parameter qname="ns3:fileName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="savexmltoserver getfilemetadata getfilexpath"/>
+  <ns1:operation name="getfilemetadata" qname="ns4:getfilemetadata" returnQName="ns4:getfilemetadataReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://services.quicklogix.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:dbName" type="xsd:string"/>
+   <ns1:parameter qname="ns4:fileName" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="savexmltoserver getfilemetadata updatexml getfilexpath"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="XMLService"/>
   <ns1:parameter name="className" value="com.quicklogix.services.XMLService"/>

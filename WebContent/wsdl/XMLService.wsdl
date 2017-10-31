@@ -4,9 +4,26 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://services.quicklogix.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="updatexml">
+    <complexType>
+     <sequence>
+      <element name="dbName" type="xsd:string"/>
+      <element name="pathName" type="xsd:string"/>
+      <element name="inputXML" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updatexmlResponse">
+    <complexType>
+     <sequence>
+      <element name="updatexmlReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="savexmltoserver">
     <complexType>
      <sequence>
+      <element name="dbName" type="xsd:string"/>
       <element name="inputXML" type="xsd:string"/>
      </sequence>
     </complexType>
@@ -21,6 +38,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="getfilexpath">
     <complexType>
      <sequence>
+      <element name="dbName" type="xsd:string"/>
       <element name="fileName" type="xsd:string"/>
      </sequence>
     </complexType>
@@ -35,6 +53,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="getfilemetadata">
     <complexType>
      <sequence>
+      <element name="dbName" type="xsd:string"/>
       <element name="fileName" type="xsd:string"/>
      </sequence>
     </complexType>
@@ -48,6 +67,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    </element>
   </schema>
  </wsdl:types>
+
+   <wsdl:message name="updatexmlResponse">
+
+      <wsdl:part element="impl:updatexmlResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
 
    <wsdl:message name="getfilexpathResponse">
 
@@ -97,7 +124,27 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="updatexmlRequest">
+
+      <wsdl:part element="impl:updatexml" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:portType name="XMLService">
+
+      <wsdl:operation name="updatexml">
+
+         <wsdl:input message="impl:updatexmlRequest" name="updatexmlRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updatexmlResponse" name="updatexmlResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="savexmltoserver">
 
@@ -140,6 +187,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:binding name="XMLServiceSoapBinding" type="impl:XMLService">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="updatexml">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updatexmlRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updatexmlResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="savexmltoserver">
 

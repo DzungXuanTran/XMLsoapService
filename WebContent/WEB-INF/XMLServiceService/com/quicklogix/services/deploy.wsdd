@@ -10,16 +10,24 @@
       <parameter name="className" value="com.quicklogix.services.XMLService"/>
       <parameter name="wsdlPortType" value="XMLService"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://services.quicklogix.com" xmlns:retNS="http://services.quicklogix.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updatexml" qname="operNS:updatexml" returnQName="retNS:updatexmlReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dbName" type="tns:string"/>
+        <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pathName" type="tns:string"/>
+        <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inputXML" type="tns:string"/>
+      </operation>
       <operation xmlns:operNS="http://services.quicklogix.com" xmlns:retNS="http://services.quicklogix.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="savexmltoserver" qname="operNS:savexmltoserver" returnQName="retNS:savexmltoserverReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dbName" type="tns:string"/>
         <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inputXML" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://services.quicklogix.com" xmlns:retNS="http://services.quicklogix.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getfilexpath" qname="operNS:getfilexpath" returnQName="retNS:getfilexpathReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dbName" type="tns:string"/>
         <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:fileName" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://services.quicklogix.com" xmlns:retNS="http://services.quicklogix.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getfilemetadata" qname="operNS:getfilemetadata" returnQName="retNS:getfilemetadataReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dbName" type="tns:string"/>
         <parameter xmlns:pns="http://services.quicklogix.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:fileName" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="savexmltoserver getfilemetadata getfilexpath"/>
+      <parameter name="allowedMethods" value="savexmltoserver getfilemetadata updatexml getfilexpath"/>
 
   </service>
 </deployment>

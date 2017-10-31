@@ -3,7 +3,6 @@ package com.quicklogix.helpers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,31 +17,16 @@ import org.xml.sax.XMLReader;
 public class BaseXConnector {
     private final String FILENAME = "quicklogix";
     private static BaseXClient session;
-    private String db;
 
     private BaseXConnector (){}
 
-    public static BaseXConnector connect (String host,int port, String username, String password, String dbName) {
-        return connect(host, port, username, password, dbName, true);
-    }
-    private static BaseXConnector connect(String host,int port, String username, String password, String dbName, boolean dbExist) {
+    public static BaseXConnector connect(String host,int port, String username, String password) {
         BaseXConnector instance = new BaseXConnector();
         try {
-            session = new BaseXClient(host, port, username, password);
-            // Open DB
-            if (!dbExist) {
-            	session.execute("CREATE DB " + dbName);
-            }
-            session.execute("OPEN " + dbName);
-            instance.db = dbName;
-        } catch(IOException ex) {
-            // catch db not found
-            if (ex.getMessage().contentEquals("Database '" + dbName + "' was not found.")) {
-                instance = connect(host, port, username, password, dbName, false);
-            } else {
-            	ex.printStackTrace();
-            }
-        }
+			session = new BaseXClient(host, port, username, password);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         return instance;
     }
 
@@ -56,11 +40,11 @@ public class BaseXConnector {
         }
     }
     
-    public Map<String, String> getFileMetaData(String fileName) throws IOException{
+    public Map<String, String> getFileMetaData(String dbName, String fileName) throws IOException{
     	if (session == null) {
     		throw new IOException("No connection");
     	} else {
-    			String xml = session.execute("XQUERY collection('" + db + "/" + fileName + "')");
+    			String xml = session.execute("XQUERY collection('" + dbName + "/" + fileName + "')");
     			if (xml.isEmpty()) {
         			throw new IOException("File not found");
     			} else {
@@ -84,11 +68,11 @@ public class BaseXConnector {
     	return null;
     }
     
-    public String[] getFileXPath(String fileName) throws IOException {
+    public String[] getFileXPath(String dbName, String fileName) throws IOException {
     	if (session == null) {
     		throw new IOException("No connection");
     	} else {
-    		String xml = session.execute("XQUERY collection('" + db + "/" + fileName + "')");
+    		String xml = session.execute("XQUERY collection('" + dbName + "/" + fileName + "')");
 			if (xml.isEmpty()) {
     			throw new IOException("File not found");
 			} else {
@@ -110,5 +94,28 @@ public class BaseXConnector {
 			}
     	}
     	return null;
+    }
+    
+
+    public void openDB(String dbName) throws IOException {
+    	try {
+    		session.execute("OPEN " + dbName);
+        } catch(IOException ex) {
+            if (ex.getMessage().contentEquals("Database '" + dbName + "' was not found.")) {
+            	session.execute("CREATE DB " + dbName);
+            	openDB(dbName);
+            } else {
+            	throw ex;
+            }
+        }
+    }
+
+    public boolean updateFile(String dbName, String pathName, String xml) throws IOException {
+    	if (session == null) {
+            throw new IOException("No connection");
+        } else {
+            session.replace(pathName, new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8.name())));
+            return true;
+        }
     }
 }
