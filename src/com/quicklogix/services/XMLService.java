@@ -38,4 +38,8 @@ public class XMLService {
     	connection.openDB(dbName);
     	return connection.getFileXPath(dbName, fileName);
     }
+    
+    public void updatexml(String dbName, String pathName, String inputXML) throws IOException {
+    	connection.updateFile(dbName, pathName, inputXML);
+    }
 }

@@ -3,7 +3,6 @@ package com.quicklogix.helpers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -97,6 +96,7 @@ public class BaseXConnector {
     	return null;
     }
     
+
     public void openDB(String dbName) throws IOException {
     	try {
     		session.execute("OPEN " + dbName);
@@ -107,6 +107,14 @@ public class BaseXConnector {
             } else {
             	throw ex;
             }
+        }
+    }
+
+    public void updateFile(String dbName, String pathName, String xml) throws IOException {
+    	if (session == null) {
+            throw new IOException("No connection");
+        } else {
+                session.replace(pathName, new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8.name())));
         }
     }
 }
