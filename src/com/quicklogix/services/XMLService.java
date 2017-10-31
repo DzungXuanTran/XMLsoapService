@@ -18,12 +18,12 @@ public class XMLService {
         		props.getProperty("basexhost"), 
         		Integer.parseInt(props.getProperty("basexport")),
         		props.getProperty("basexusername"),
-        		props.getProperty("basexpassword"),
-        		props.getProperty("basexdatabase")
+        		props.getProperty("basexpassword")
         		);
     }
 
-    public String savexmltoserver(String inputXML) throws IOException{
+    public String savexmltoserver(String dbName, String inputXML) throws IOException{
+    	connection.openDB(dbName);
         return connection.addFile(inputXML);
     }
     

@@ -22,27 +22,13 @@ public class BaseXConnector {
 
     private BaseXConnector (){}
 
-    public static BaseXConnector connect (String host,int port, String username, String password, String dbName) {
-        return connect(host, port, username, password, dbName, true);
-    }
-    private static BaseXConnector connect(String host,int port, String username, String password, String dbName, boolean dbExist) {
+    public static BaseXConnector connect(String host,int port, String username, String password) {
         BaseXConnector instance = new BaseXConnector();
         try {
-            session = new BaseXClient(host, port, username, password);
-            // Open DB
-            if (!dbExist) {
-            	session.execute("CREATE DB " + dbName);
-            }
-            session.execute("OPEN " + dbName);
-            instance.db = dbName;
-        } catch(IOException ex) {
-            // catch db not found
-            if (ex.getMessage().contentEquals("Database '" + dbName + "' was not found.")) {
-                instance = connect(host, port, username, password, dbName, false);
-            } else {
-            	ex.printStackTrace();
-            }
-        }
+			session = new BaseXClient(host, port, username, password);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         return instance;
     }
 
@@ -110,5 +96,18 @@ public class BaseXConnector {
 			}
     	}
     	return null;
+    }
+    
+    public void openDB(String dbName) throws IOException {
+    	try {
+    		session.execute("OPEN " + dbName);
+        } catch(IOException ex) {
+            if (ex.getMessage().contentEquals("Database '" + dbName + "' was not found.")) {
+            	session.execute("CREATE DB " + dbName);
+            	session.execute("OPEN " + dbName);
+            } else {
+            	throw ex;
+            }
+        }
     }
 }
