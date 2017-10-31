@@ -39,7 +39,8 @@ public class XMLService {
     	return connection.getFileXPath(dbName, fileName);
     }
     
-    public void updatexml(String dbName, String pathName, String inputXML) throws IOException {
-    	connection.updateFile(dbName, pathName, inputXML);
+    public boolean updatexml(String dbName, String pathName, String inputXML) throws IOException {
+    	connection.openDB(dbName);
+    	return connection.updateFile(dbName, pathName, inputXML);
     }
 }
