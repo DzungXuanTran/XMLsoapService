@@ -18,7 +18,6 @@ import org.xml.sax.XMLReader;
 public class BaseXConnector {
     private final String FILENAME = "quicklogix";
     private static BaseXClient session;
-    private String db;
 
     private BaseXConnector (){}
 
@@ -42,11 +41,11 @@ public class BaseXConnector {
         }
     }
     
-    public Map<String, String> getFileMetaData(String fileName) throws IOException{
+    public Map<String, String> getFileMetaData(String dbName, String fileName) throws IOException{
     	if (session == null) {
     		throw new IOException("No connection");
     	} else {
-    			String xml = session.execute("XQUERY collection('" + db + "/" + fileName + "')");
+    			String xml = session.execute("XQUERY collection('" + dbName + "/" + fileName + "')");
     			if (xml.isEmpty()) {
         			throw new IOException("File not found");
     			} else {
@@ -70,11 +69,11 @@ public class BaseXConnector {
     	return null;
     }
     
-    public String[] getFileXPath(String fileName) throws IOException {
+    public String[] getFileXPath(String dbName, String fileName) throws IOException {
     	if (session == null) {
     		throw new IOException("No connection");
     	} else {
-    		String xml = session.execute("XQUERY collection('" + db + "/" + fileName + "')");
+    		String xml = session.execute("XQUERY collection('" + dbName + "/" + fileName + "')");
 			if (xml.isEmpty()) {
     			throw new IOException("File not found");
 			} else {
