@@ -7,6 +7,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="savexmltoserver">
     <complexType>
      <sequence>
+      <element name="dbName" type="xsd:string"/>
       <element name="inputXML" type="xsd:string"/>
      </sequence>
     </complexType>
@@ -21,6 +22,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="getfilexpath">
     <complexType>
      <sequence>
+      <element name="dbName" type="xsd:string"/>
       <element name="fileName" type="xsd:string"/>
      </sequence>
     </complexType>
@@ -35,6 +37,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="getfilemetadata">
     <complexType>
      <sequence>
+      <element name="dbName" type="xsd:string"/>
       <element name="fileName" type="xsd:string"/>
      </sequence>
     </complexType>

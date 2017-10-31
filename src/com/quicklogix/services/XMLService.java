@@ -27,13 +27,15 @@ public class XMLService {
         return connection.addFile(inputXML);
     }
     
-    public String getfilemetadata(String fileName) throws IOException {
+    public String getfilemetadata(String dbName, String fileName) throws IOException {
+    	connection.openDB(dbName);
     	Map<String, String> elements = connection.getFileMetaData(fileName);
     	JSONObject jsonObj = new JSONObject(elements);
     	return jsonObj.toString();
     }
     
-    public String[] getfilexpath(String fileName) throws IOException {
+    public String[] getfilexpath(String dbName, String fileName) throws IOException {
+    	connection.openDB(dbName);
     	return connection.getFileXPath(fileName);
     }
 }

@@ -104,7 +104,7 @@ public class BaseXConnector {
         } catch(IOException ex) {
             if (ex.getMessage().contentEquals("Database '" + dbName + "' was not found.")) {
             	session.execute("CREATE DB " + dbName);
-            	session.execute("OPEN " + dbName);
+            	openDB(dbName);
             } else {
             	throw ex;
             }
