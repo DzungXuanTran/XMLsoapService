@@ -111,4 +111,12 @@ public class BaseXConnector {
     	}
     	return null;
     }
+    
+    public void updateFile(String dbName, String pathName, String xml) throws IOException {
+    	if (session == null) {
+            throw new IOException("No connection");
+        } else {
+                session.replace(pathName, new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8.name())));
+        }
+    }
 }

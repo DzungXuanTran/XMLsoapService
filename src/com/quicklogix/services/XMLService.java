@@ -36,4 +36,8 @@ public class XMLService {
     public String[] getfilexpath(String fileName) throws IOException {
     	return connection.getFileXPath(fileName);
     }
+    
+    public void updatexml(String dbName, String pathName, String inputXML) throws IOException {
+    	connection.updateFile(dbName, pathName, inputXML);
+    }
 }
