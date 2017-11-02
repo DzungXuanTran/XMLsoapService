@@ -15,7 +15,6 @@ public class XPathStringsGenerator extends DefaultHandler{
     private XMLReader xmlReader;
     private XPathStringsGenerator parent;
     private StringBuilder characters = new StringBuilder();
-    private Map<String, Integer> elementNameCount = new HashMap<String, Integer>();
     private List<String> elements;
 
     public XPathStringsGenerator(XMLReader xmlReader) {
@@ -32,21 +31,26 @@ public class XPathStringsGenerator extends DefaultHandler{
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-        Integer count = elementNameCount.get(qName);
-        if(null == count) {
-            count = 1;
-        } else {
-            count++;
-        }
-        elementNameCount.put(qName, count);
-        String childXPath = xPath + "/" + qName + "[" + count + "]";
+        String childXPath = xPath + "/" + qName;
         int attrsLength = atts.getLength();
         for (int i = 0; i < attrsLength; i++) {
             String name = atts.getLocalName(i);
             if (name == null) {
                 name = atts.getQName(i);
             }
-            elements.add(childXPath + "/@" + name);
+            String newElem = childXPath + "/@" + name;
+            String newElemN =  childXPath + "[n]/@" + name;
+            boolean containElem = elements.contains(newElem);
+            boolean containElemN = elements.contains(newElemN); 
+            if (containElem && !containElemN) {
+            	int index = elements.indexOf(newElem);
+        		elements.remove(newElem);
+        		elements.add(index, newElemN);
+            } else {
+            	if (!containElem && !containElemN) {
+            		elements.add(newElem);
+            	}
+            }
         }
         XPathStringsGenerator child = new XPathStringsGenerator(childXPath, xmlReader, this, elements);
         xmlReader.setContentHandler(child);
@@ -54,10 +58,18 @@ public class XPathStringsGenerator extends DefaultHandler{
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        String value = characters.toString().trim();
-        if(value.length() > 0) {
-            elements.add(xPath);
-        }
+    	boolean containXpath = elements.contains(xPath); 
+    	boolean containXpathN = elements.contains(xPath + "[n]");
+    	if (containXpath && !containXpathN) {
+    		int index = elements.indexOf(xPath);
+			elements.remove(xPath);
+			elements.add(index, xPath + "[n]");
+    	} else {
+    		if (!containXpath && !containXpathN) {
+    			elements.add(xPath);
+    		}
+    	}
+        
         xmlReader.setContentHandler(parent);
     }
 
