@@ -44,7 +44,7 @@ public class XPathJSONGenerator extends DefaultHandler{
             if (name == null) {
                 name = atts.getQName(i);
             }
-            elements.put(xPath + "/@" + name, atts.getValue(i));
+            elements.put(childXPath + "/@" + name, atts.getValue(i));
         }
         XPathJSONGenerator child = new XPathJSONGenerator(childXPath, xmlReader, this, elements);
         xmlReader.setContentHandler(child);

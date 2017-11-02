@@ -46,7 +46,7 @@ public class XPathStringsGenerator extends DefaultHandler{
             if (name == null) {
                 name = atts.getQName(i);
             }
-            elements.add(xPath + "/@" + name);
+            elements.add(childXPath + "/@" + name);
         }
         XPathStringsGenerator child = new XPathStringsGenerator(childXPath, xmlReader, this, elements);
         xmlReader.setContentHandler(child);

@@ -22,24 +22,24 @@ public class XMLService {
         		);
     }
 
-    public String savexmltoserver(String dbName, String inputXML) throws IOException{
+    public String addXML(String dbName, String inputXML) throws IOException{
     	connection.openDB(dbName);
         return connection.addFile(inputXML);
     }
     
-    public String getfilemetadata(String dbName, String fileName) throws IOException {
+    public String getXML(String dbName, String fileName) throws IOException {
     	connection.openDB(dbName);
-    	Map<String, String> elements = connection.getFileMetaData(dbName, fileName);
+    	Map<String, String> elements = connection.getFile(dbName, fileName);
     	JSONObject jsonObj = new JSONObject(elements);
     	return jsonObj.toString();
     }
     
-    public String[] getfilexpath(String dbName, String fileName) throws IOException {
+    public String[] getXpath(String dbName, String fileName) throws IOException {
     	connection.openDB(dbName);
     	return connection.getFileXPath(dbName, fileName);
     }
     
-    public boolean updatexml(String dbName, String pathName, String inputXML) throws IOException {
+    public boolean updateXML(String dbName, String pathName, String inputXML) throws IOException {
     	connection.openDB(dbName);
     	return connection.updateFile(dbName, pathName, inputXML);
     }

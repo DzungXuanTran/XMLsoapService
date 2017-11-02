@@ -4,7 +4,22 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://services.quicklogix.com" xmlns="http://www.w3.org/2001/XMLSchema">
-   <element name="updatexml">
+   <element name="getXML">
+    <complexType>
+     <sequence>
+      <element name="dbName" type="xsd:string"/>
+      <element name="fileName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="getXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateXML">
     <complexType>
      <sequence>
       <element name="dbName" type="xsd:string"/>
@@ -13,14 +28,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updatexmlResponse">
+   <element name="updateXMLResponse">
     <complexType>
      <sequence>
-      <element name="updatexmlReturn" type="xsd:boolean"/>
+      <element name="updateXMLReturn" type="xsd:boolean"/>
      </sequence>
     </complexType>
    </element>
-   <element name="savexmltoserver">
+   <element name="addXML">
     <complexType>
      <sequence>
       <element name="dbName" type="xsd:string"/>
@@ -28,14 +43,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="savexmltoserverResponse">
+   <element name="addXMLResponse">
     <complexType>
      <sequence>
-      <element name="savexmltoserverReturn" type="xsd:string"/>
+      <element name="addXMLReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="getfilexpath">
+   <element name="getXpath">
     <complexType>
      <sequence>
       <element name="dbName" type="xsd:string"/>
@@ -43,90 +58,75 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getfilexpathResponse">
+   <element name="getXpathResponse">
     <complexType>
      <sequence>
-      <element maxOccurs="unbounded" name="getfilexpathReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getfilemetadata">
-    <complexType>
-     <sequence>
-      <element name="dbName" type="xsd:string"/>
-      <element name="fileName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getfilemetadataResponse">
-    <complexType>
-     <sequence>
-      <element name="getfilemetadataReturn" type="xsd:string"/>
+      <element maxOccurs="unbounded" name="getXpathReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
   </schema>
  </wsdl:types>
 
-   <wsdl:message name="updatexmlResponse">
+   <wsdl:message name="addXMLRequest">
 
-      <wsdl:part element="impl:updatexmlResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getfilexpathResponse">
-
-      <wsdl:part element="impl:getfilexpathResponse" name="parameters">
+      <wsdl:part element="impl:addXML" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getfilemetadataResponse">
+   <wsdl:message name="getXMLRequest">
 
-      <wsdl:part element="impl:getfilemetadataResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getfilexpathRequest">
-
-      <wsdl:part element="impl:getfilexpath" name="parameters">
+      <wsdl:part element="impl:getXML" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="savexmltoserverResponse">
+   <wsdl:message name="updateXMLRequest">
 
-      <wsdl:part element="impl:savexmltoserverResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getfilemetadataRequest">
-
-      <wsdl:part element="impl:getfilemetadata" name="parameters">
+      <wsdl:part element="impl:updateXML" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="savexmltoserverRequest">
+   <wsdl:message name="getXpathResponse">
 
-      <wsdl:part element="impl:savexmltoserver" name="parameters">
+      <wsdl:part element="impl:getXpathResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updatexmlRequest">
+   <wsdl:message name="addXMLResponse">
 
-      <wsdl:part element="impl:updatexml" name="parameters">
+      <wsdl:part element="impl:addXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getXpathRequest">
+
+      <wsdl:part element="impl:getXpath" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getXMLResponse">
+
+      <wsdl:part element="impl:getXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateXMLResponse">
+
+      <wsdl:part element="impl:updateXMLResponse" name="parameters">
 
       </wsdl:part>
 
@@ -134,49 +134,49 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="XMLService">
 
-      <wsdl:operation name="updatexml">
+      <wsdl:operation name="getXML">
 
-         <wsdl:input message="impl:updatexmlRequest" name="updatexmlRequest">
+         <wsdl:input message="impl:getXMLRequest" name="getXMLRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:updatexmlResponse" name="updatexmlResponse">
+         <wsdl:output message="impl:getXMLResponse" name="getXMLResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="savexmltoserver">
+      <wsdl:operation name="updateXML">
 
-         <wsdl:input message="impl:savexmltoserverRequest" name="savexmltoserverRequest">
+         <wsdl:input message="impl:updateXMLRequest" name="updateXMLRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:savexmltoserverResponse" name="savexmltoserverResponse">
+         <wsdl:output message="impl:updateXMLResponse" name="updateXMLResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="getfilexpath">
+      <wsdl:operation name="addXML">
 
-         <wsdl:input message="impl:getfilexpathRequest" name="getfilexpathRequest">
+         <wsdl:input message="impl:addXMLRequest" name="addXMLRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getfilexpathResponse" name="getfilexpathResponse">
+         <wsdl:output message="impl:addXMLResponse" name="addXMLResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="getfilemetadata">
+      <wsdl:operation name="getXpath">
 
-         <wsdl:input message="impl:getfilemetadataRequest" name="getfilemetadataRequest">
+         <wsdl:input message="impl:getXpathRequest" name="getXpathRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getfilemetadataResponse" name="getfilemetadataResponse">
+         <wsdl:output message="impl:getXpathResponse" name="getXpathResponse">
 
        </wsdl:output>
 
@@ -188,17 +188,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
-      <wsdl:operation name="updatexml">
+      <wsdl:operation name="getXML">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="updatexmlRequest">
+         <wsdl:input name="getXMLRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="updatexmlResponse">
+         <wsdl:output name="getXMLResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -206,17 +206,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="savexmltoserver">
+      <wsdl:operation name="updateXML">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="savexmltoserverRequest">
+         <wsdl:input name="updateXMLRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="savexmltoserverResponse">
+         <wsdl:output name="updateXMLResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -224,17 +224,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getfilexpath">
+      <wsdl:operation name="addXML">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getfilexpathRequest">
+         <wsdl:input name="addXMLRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getfilexpathResponse">
+         <wsdl:output name="addXMLResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -242,17 +242,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getfilemetadata">
+      <wsdl:operation name="getXpath">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getfilemetadataRequest">
+         <wsdl:input name="getXpathRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getfilemetadataResponse">
+         <wsdl:output name="getXpathResponse">
 
             <wsdlsoap:body use="literal"/>
 

@@ -40,7 +40,7 @@ public class BaseXConnector {
         }
     }
     
-    public Map<String, String> getFileMetaData(String dbName, String fileName) throws IOException{
+    public Map<String, String> getFile(String dbName, String fileName) throws IOException{
     	if (session == null) {
     		throw new IOException("No connection");
     	} else {
