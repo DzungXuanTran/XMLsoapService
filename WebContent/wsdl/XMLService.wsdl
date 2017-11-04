@@ -4,37 +4,6 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://services.quicklogix.com" xmlns="http://www.w3.org/2001/XMLSchema">
-   <element name="getXML">
-    <complexType>
-     <sequence>
-      <element name="dbName" type="xsd:string"/>
-      <element name="fileName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getXMLResponse">
-    <complexType>
-     <sequence>
-      <element name="getXMLReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateXML">
-    <complexType>
-     <sequence>
-      <element name="dbName" type="xsd:string"/>
-      <element name="pathName" type="xsd:string"/>
-      <element name="inputXML" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateXMLResponse">
-    <complexType>
-     <sequence>
-      <element name="updateXMLReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="addXML">
     <complexType>
      <sequence>
@@ -65,12 +34,66 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="updateXML">
+    <complexType>
+     <sequence>
+      <element name="dbName" type="xsd:string"/>
+      <element name="pathName" type="xsd:string"/>
+      <element name="inputXML" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="updateXMLReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addMultipleXML">
+    <complexType>
+     <sequence>
+      <element name="dbName" type="xsd:string"/>
+      <element maxOccurs="unbounded" name="inputXML" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addMultipleXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="addMultipleXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getXML">
+    <complexType>
+     <sequence>
+      <element name="dbName" type="xsd:string"/>
+      <element name="fileName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="getXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
  </wsdl:types>
 
    <wsdl:message name="addXMLRequest">
 
       <wsdl:part element="impl:addXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addMultipleXMLResponse">
+
+      <wsdl:part element="impl:addMultipleXMLResponse" name="parameters">
 
       </wsdl:part>
 
@@ -100,6 +123,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="addMultipleXMLRequest">
+
+      <wsdl:part element="impl:addMultipleXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="addXMLResponse">
 
       <wsdl:part element="impl:addXMLResponse" name="parameters">
@@ -116,14 +147,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getXMLResponse">
-
-      <wsdl:part element="impl:getXMLResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="updateXMLResponse">
 
       <wsdl:part element="impl:updateXMLResponse" name="parameters">
@@ -132,31 +155,15 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="getXMLResponse">
+
+      <wsdl:part element="impl:getXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:portType name="XMLService">
-
-      <wsdl:operation name="getXML">
-
-         <wsdl:input message="impl:getXMLRequest" name="getXMLRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getXMLResponse" name="getXMLResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateXML">
-
-         <wsdl:input message="impl:updateXMLRequest" name="updateXMLRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateXMLResponse" name="updateXMLResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="addXML">
 
@@ -182,47 +189,47 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="updateXML">
+
+         <wsdl:input message="impl:updateXMLRequest" name="updateXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateXMLResponse" name="updateXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addMultipleXML">
+
+         <wsdl:input message="impl:addMultipleXMLRequest" name="addMultipleXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addMultipleXMLResponse" name="addMultipleXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getXML">
+
+         <wsdl:input message="impl:getXMLRequest" name="getXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getXMLResponse" name="getXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="XMLServiceSoapBinding" type="impl:XMLService">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-
-      <wsdl:operation name="getXML">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getXMLRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getXMLResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateXML">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateXMLRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateXMLResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="addXML">
 
@@ -253,6 +260,60 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getXpathResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addMultipleXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addMultipleXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addMultipleXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getXMLResponse">
 
             <wsdlsoap:body use="literal"/>
 
