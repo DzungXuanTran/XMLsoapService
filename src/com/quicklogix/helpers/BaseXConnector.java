@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,6 +18,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import com.ximpleware.AutoPilot;
+import com.ximpleware.EOFException;
+import com.ximpleware.EncodingException;
+import com.ximpleware.EntityException;
+import com.ximpleware.NavException;
 import com.ximpleware.ParseException;
 import com.ximpleware.VTDException;
 import com.ximpleware.VTDGen;
@@ -39,7 +46,7 @@ public class BaseXConnector {
         return instance;
     }
 
-    public String addFile(String xml) throws IOException {
+    public boolean addFile(String fileName, String xml) throws IOException {
         if (session == null) {
             throw new IOException("No connection");
         } else {
@@ -47,9 +54,8 @@ public class BaseXConnector {
                 vg.setDoc(xml.getBytes(StandardCharsets.UTF_8));
                 vg.parse(false);
                 byte[] bytes = vg.getNav().getXML().getBytes();
-                String path = FILENAME + System.currentTimeMillis();
-                session.add(path, new ByteArrayInputStream(bytes));
-                return path;
+                session.add(fileName, new ByteArrayInputStream(bytes));
+                return true;
         	} catch (ParseException ex) {
         		throw new IOException("Invalid XML");
         	}
@@ -84,7 +90,35 @@ public class BaseXConnector {
     	return null;
     }
     
-    public String[] getFileXPath(String dbName, String fileName) throws IOException {
+    public String[] getFileXpathWithN(String dbName, String fileName) throws IOException {
+    	if (session == null) {
+    		throw new IOException("No connection");
+    	} else {
+    		String xml = session.execute("XQUERY collection('" + dbName + "/" + fileName + "')");
+			if (xml.isEmpty()) {
+    			throw new IOException("File not found");
+			} else {
+				try {
+			 SAXParserFactory spf = SAXParserFactory.newInstance();
+			 SAXParser sp = spf.newSAXParser();
+			 XMLReader xr = sp.getXMLReader();
+		     xr.setContentHandler(new XPathStringsGeneratorN(xr));
+		     xr.parse(new InputSource(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8.name()))));
+		     ContentHandler contentHandler = xr.getContentHandler();
+		     if (contentHandler instanceof XPathStringsGeneratorN) {
+		    	 return ((XPathStringsGeneratorN) contentHandler).getElements();
+		     }
+				} catch (SAXException ex) {
+					ex.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					e.printStackTrace();
+				}
+			}
+    	}
+    	return null;
+    }
+    
+    public String[] getFileXpath(String dbName, String fileName) throws IOException {
     	if (session == null) {
     		throw new IOException("No connection");
     	} else {
@@ -135,7 +169,7 @@ public class BaseXConnector {
         }
     }
 
-    public String addMultipleFile(String[] xmls) throws IOException, VTDException {
+    public boolean addMultipleFile(String fileName, String[] xmls) throws IOException, VTDException {
 		StringBuffer buffer = new StringBuffer();
         Map<String, String> map = getContent(xmls[0]);
         String footer = map.get("footer");
@@ -152,9 +186,8 @@ public class BaseXConnector {
             vg.setDoc(buffer.toString().getBytes());
             vg.parse(false);
             byte[] bytes = vg.getNav().getXML().getBytes();
-            String path = FILENAME + System.currentTimeMillis();
-            session.add(path, new ByteArrayInputStream(bytes));
-            return path;
+            session.add(fileName, new ByteArrayInputStream(bytes));
+            return true;
         } catch (ParseException e) {
 //            e.printStackTrace();
         	throw new IOException("Invalid XML");

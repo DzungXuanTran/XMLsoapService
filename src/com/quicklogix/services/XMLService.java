@@ -8,6 +8,11 @@ import org.json.simple.JSONObject;
 
 import com.quicklogix.helpers.BaseXConnector;
 import com.quicklogix.propertiesfileloader.PropertyLoader;
+import com.ximpleware.EOFException;
+import com.ximpleware.EncodingException;
+import com.ximpleware.EntityException;
+import com.ximpleware.NavException;
+import com.ximpleware.ParseException;
 import com.ximpleware.VTDException;
 
 public class XMLService {
@@ -21,9 +26,9 @@ public class XMLService {
 				props.getProperty("basexpassword"));
 	}
 
-	public String addXML(String dbName, String inputXML) throws IOException {
+	public boolean addXML(String dbName, String fileName, String inputXML) throws IOException {
 		connection.openDB(dbName);
-		return connection.addFile(inputXML);
+		return connection.addFile(fileName, inputXML);
 	}
 
 	public String getXML(String dbName, String fileName) throws IOException {
@@ -33,24 +38,41 @@ public class XMLService {
 		return jsonObj.toString();
 	}
 
-	public String[] getXpath(String dbName, String fileName) throws IOException {
+	public String[] getXpathWithN(String dbName, String fileName) throws IOException {
 		connection.openDB(dbName);
-		return connection.getFileXPath(dbName, fileName);
+		return connection.getFileXpathWithN(dbName, fileName);
+	}
+	
+	public String[] getXpathN(String dbName, String fileName) throws IOException {
+		connection.openDB(dbName);
+		return connection.getFileXpath(dbName, fileName);
 	}
 
-	public boolean updateXML(String dbName, String pathName, String inputXML) throws IOException {
+	public boolean updateXML(String dbName, String fileName, String inputXML) throws IOException {
 		connection.openDB(dbName);
-		return connection.updateFile(dbName, pathName, inputXML);
+		return connection.updateFile(dbName, fileName, inputXML);
 	}
 
-	public String addMultipleXML(String dbName, String[] inputXML)
+	public boolean addMultipleXML(String dbName, String fileName, String[] inputXML)
 			throws IOException {
 		try {
 			connection.openDB(dbName);
-			return connection.addMultipleFile(inputXML);
+			return connection.addMultipleFile(fileName, inputXML);
 		} catch (VTDException ex) {
 			ex.printStackTrace();
 		}
-		return "";
+		return false;
+	}
+	
+	public void test() {
+		try {
+			String[] xpaths = connection.getFileXpathWithN("quicklogix", "quicklogix1509791585581");
+			for (String str : xpaths) {
+				System.out.println(str);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
