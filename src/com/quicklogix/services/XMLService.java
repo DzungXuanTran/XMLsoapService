@@ -43,7 +43,7 @@ public class XMLService {
 		return connection.getFileXpathWithN(dbName, fileName);
 	}
 	
-	public String[] getXpathN(String dbName, String fileName) throws IOException {
+	public String[] getXpath(String dbName, String fileName) throws IOException {
 		connection.openDB(dbName);
 		return connection.getFileXpath(dbName, fileName);
 	}
@@ -64,15 +64,4 @@ public class XMLService {
 		return false;
 	}
 	
-	public void test() {
-		try {
-			String[] xpaths = connection.getFileXpathWithN("quicklogix", "quicklogix1509791585581");
-			for (String str : xpaths) {
-				System.out.println(str);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
