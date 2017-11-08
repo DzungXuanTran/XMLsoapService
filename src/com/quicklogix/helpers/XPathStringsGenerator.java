@@ -39,18 +39,7 @@ public class XPathStringsGenerator extends DefaultHandler{
                 name = atts.getQName(i);
             }
             String newElem = childXPath + "/@" + name;
-            String newElemN =  childXPath + "[n]/@" + name;
-            boolean containElem = elements.contains(newElem);
-            boolean containElemN = elements.contains(newElemN); 
-            if (containElem && !containElemN) {
-            	int index = elements.indexOf(newElem);
-        		elements.remove(newElem);
-        		elements.add(index, newElemN);
-            } else {
-            	if (!containElem && !containElemN) {
-            		elements.add(newElem);
-            	}
-            }
+            elements.add(newElem);
         }
         XPathStringsGenerator child = new XPathStringsGenerator(childXPath, xmlReader, this, elements);
         xmlReader.setContentHandler(child);
@@ -58,18 +47,7 @@ public class XPathStringsGenerator extends DefaultHandler{
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-    	boolean containXpath = elements.contains(xPath); 
-    	boolean containXpathN = elements.contains(xPath + "[n]");
-    	if (containXpath && !containXpathN) {
-    		int index = elements.indexOf(xPath);
-			elements.remove(xPath);
-			elements.add(index, xPath + "[n]");
-    	} else {
-    		if (!containXpath && !containXpathN) {
-    			elements.add(xPath);
-    		}
-    	}
-        
+    	elements.add(xPath);
         xmlReader.setContentHandler(parent);
     }
 
